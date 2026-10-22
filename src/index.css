@@ -1,0 +1,254 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f7f5f2;
+  --color-paper-2: #ffffff;
+  --color-rule: #e4dfd9;
+  --color-rule-soft: #efebe6;
+  --color-ink: #17161c;
+  --color-ink-2: #63606d;
+  --color-ink-3: #7b7787;
+  --color-accent: #5a52d6;
+  --color-accent-light: #a9a2ff;
+  --color-accent-deep: #2c2757;
+  --color-glass: #14131d;
+
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Cascadia Mono", ui-monospace, monospace;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #1b1a24;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Component classes live in the components layer so Tailwind utilities passed
+   in `className` always win over these defaults. */
+@layer components {
+  /* Braun-style label plate: tracked mono small caps */
+  .plate {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .tnum {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Surfaces */
+  .mica {
+    background-color: rgba(247, 245, 242, 0.88);
+    backdrop-filter: blur(38px) saturate(150%);
+    -webkit-backdrop-filter: blur(38px) saturate(150%);
+  }
+  .glass {
+    background-color: rgba(20, 19, 29, 0.62);
+    backdrop-filter: blur(30px) saturate(160%);
+    -webkit-backdrop-filter: blur(30px) saturate(160%);
+    box-shadow:
+      0 28px 70px rgba(10, 8, 24, 0.44),
+      0 2px 10px rgba(10, 8, 24, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+
+  /* Controls */
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: var(--color-ink-2);
+    transition:
+      background-color 160ms cubic-bezier(0.2, 0, 0, 1),
+      color 160ms cubic-bezier(0.2, 0, 0, 1),
+      transform 160ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  .icon-btn:hover {
+    background-color: rgba(23, 22, 28, 0.06);
+    color: var(--color-ink);
+  }
+  .icon-btn:active {
+    transform: scale(0.94);
+  }
+  .icon-btn:focus-visible,
+  .btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition:
+      background-color 180ms cubic-bezier(0.2, 0, 0, 1),
+      color 180ms cubic-bezier(0.2, 0, 0, 1),
+      border-color 180ms cubic-bezier(0.2, 0, 0, 1),
+      transform 180ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  .btn:active {
+    transform: translateY(1px);
+  }
+  .btn-primary {
+    background: var(--color-ink);
+    color: #fbfaf9;
+  }
+  .btn-primary:hover {
+    background: var(--color-accent-deep);
+  }
+  .btn-accent {
+    background: var(--color-accent);
+    color: #ffffff;
+  }
+  .btn-accent:hover {
+    background: var(--color-accent-deep);
+  }
+  .btn-ghost {
+    border: 1px solid var(--color-rule);
+    color: var(--color-ink);
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-ink-3);
+    background: #ffffff;
+  }
+
+  .scroll-area {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(23, 22, 28, 0.18) transparent;
+  }
+  .scroll-area::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .scroll-area::-webkit-scrollbar-thumb {
+    background: rgba(23, 22, 28, 0.16);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  .scroll-area::-webkit-scrollbar-thumb:hover {
+    background: rgba(23, 22, 28, 0.3);
+    background-clip: content-box;
+  }
+
+  .eq-bar {
+    transform-origin: bottom;
+    animation: vesper-eq 900ms cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+  .rise {
+    animation: vesper-rise 260ms cubic-bezier(0.2, 0, 0, 1) both;
+  }
+  .fade {
+    animation: vesper-fade 320ms ease both;
+  }
+  .truncate-1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* Range inputs (progress + volume) */
+input[type="range"].vesper-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"].vesper-range::-webkit-slider-runnable-track {
+  height: var(--track-h, 3px);
+  border-radius: 999px;
+  background: var(--track-bg, rgba(23, 22, 28, 0.14));
+}
+input[type="range"].vesper-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: var(--thumb, 11px);
+  height: var(--thumb, 11px);
+  margin-top: calc((var(--track-h, 3px) - var(--thumb, 11px)) / 2);
+  border-radius: 999px;
+  background: var(--thumb-bg, var(--color-ink));
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  transition: opacity 140ms ease;
+}
+input[type="range"].vesper-range:hover::-webkit-slider-thumb,
+input[type="range"].vesper-range:focus-visible::-webkit-slider-thumb {
+  opacity: 1;
+}
+input[type="range"].vesper-range::-moz-range-track {
+  height: var(--track-h, 3px);
+  border-radius: 999px;
+  background: var(--track-bg, rgba(23, 22, 28, 0.14));
+}
+input[type="range"].vesper-range::-moz-range-thumb {
+  width: var(--thumb, 11px);
+  height: var(--thumb, 11px);
+  border: none;
+  border-radius: 999px;
+  background: var(--thumb-bg, var(--color-ink));
+}
+
+@keyframes vesper-eq {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes vesper-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes vesper-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eq-bar,
+  .rise,
+  .fade {
+    animation: none !important;
+  }
+  * {
+    transition-duration: 1ms !important;
+  }
+}
